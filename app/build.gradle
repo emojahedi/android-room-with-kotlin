@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "ir.teeleh.elnaz.roomwordsample"
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
+
+    implementation "androidx.core:core-ktx:$rootProject.ktxCoreVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.ktxArchLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.ktxArchLifecycleVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
+
+    // Room
+    implementation("androidx.room:room-ktx:$ktxRoomVersion")
+    kapt("androidx.room:room-compiler:$ktxRoomVersion")
+
+}
