@@ -10,6 +10,5 @@ import androidx.room.PrimaryKey
 data class Word(
     @PrimaryKey @NonNull @ColumnInfo(name = "word") val word: String
 ) {
-
     override fun toString() = word
 }

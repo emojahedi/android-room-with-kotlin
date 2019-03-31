@@ -31,7 +31,6 @@ abstract class WordRoomDatabase : RoomDatabase() {
                     override fun onOpen(db: SupportSQLiteDatabase) {
                         super.onOpen(db)
                         populateDb(instance)
-
                     }
                 })
                 .build()

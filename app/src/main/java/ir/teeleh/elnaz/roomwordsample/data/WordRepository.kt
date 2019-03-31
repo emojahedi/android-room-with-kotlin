@@ -4,21 +4,11 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 
-class WordRepository {
+class WordRepository(private val wordDao: WordDao) {
 
-    private var wordDao: WordDao? = null
-    private var allWords: LiveData<List<Word>>? = null
+    val allWords: LiveData<List<Word>> = wordDao.getAlphabetizedWords()
 
-    constructor(db: WordRoomDatabase) {
-        wordDao = db.wordDao()
-        allWords = wordDao?.getAllWords()
-    }
-
-
-    fun getAllWords(): LiveData<List<Word>>? {
-        return allWords
-    }
-
+    @Suppress("RedundantSuspendModifier")
     suspend fun insert(word: Word) {
         withContext(IO) {
             wordDao?.insert(word)

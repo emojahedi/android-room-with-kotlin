@@ -14,7 +14,7 @@ interface WordDao {
     fun deleteAll()
 
     @Query("SELECT * from word_table ORDER BY word ASC")
-    fun getAllWords(): LiveData<List<Word>>
+    fun getAlphabetizedWords(): LiveData<List<Word>>
 
 
 }

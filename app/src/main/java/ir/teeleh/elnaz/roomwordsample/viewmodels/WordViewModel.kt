@@ -1,36 +1,37 @@
 package ir.teeleh.elnaz.roomwordsample.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import ir.teeleh.elnaz.roomwordsample.data.Word
 import ir.teeleh.elnaz.roomwordsample.data.WordRepository
+import ir.teeleh.elnaz.roomwordsample.data.WordRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
 class WordViewModel(
-    private var repository: WordRepository
-) : ViewModel() {
+    application: Application
+) : AndroidViewModel(application) {
 
-    private var allWords: LiveData<List<Word>>? = null
+    val allWords: LiveData<List<Word>>
+    private val repository: WordRepository
 
     init {
-        allWords = repository.getAllWords()
+        val wordsDao = WordRoomDatabase.getDatabase(application).wordDao()
+        repository = WordRepository(wordsDao)
+        allWords = repository.allWords
     }
 
-    private val viewModelJob = SupervisorJob()
+    private val viewModelJob = Job()
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
-    }
-
-    fun getAllWords(): LiveData<List<Word>>? {
-        return allWords
     }
 
     fun insert(word: Word) {

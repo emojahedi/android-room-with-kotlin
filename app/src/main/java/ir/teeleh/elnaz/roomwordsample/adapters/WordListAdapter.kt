@@ -13,9 +13,9 @@ import ir.teeleh.elnaz.roomwordsample.data.Word
 class WordListAdapter : RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
 
     private var mInflater: LayoutInflater? = null
-    private var mWords: List<Word>? = null // Cached copy of words
+    private var mWords = emptyList<Word>() // Cached copy of words
 
-    class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val wordItemView: TextView = itemView.findViewById(R.id.textView)
     }
 
@@ -30,26 +30,22 @@ class WordListAdapter : RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
-        if (mWords != null) {
-            val (word) = mWords!![position]
-            holder.wordItemView.text = word
+        if (mWords.isNotEmpty()) {
+            val current = mWords[position]
+            holder.wordItemView.text = current.word
         } else {
             // Covers the case of data not being ready yet.
             holder.wordItemView.text = "No Word"
         }
     }
 
-    fun setWords(words: List<Word>) {
+    internal fun setWords(words: List<Word>) {
         mWords = words
         notifyDataSetChanged()
     }
 
     // getItemCount() is called many times, and when it is first called,
     // mWords has not been updated (means initially, it's null, and we can't return null).
-    override fun getItemCount(): Int {
-        return if (mWords != null)
-            mWords!!.size
-        else
-            0
-    }
+    override fun getItemCount() = mWords.size
+
 }

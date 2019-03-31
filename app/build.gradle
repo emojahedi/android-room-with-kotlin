@@ -37,11 +37,12 @@ dependencies {
 
     implementation "androidx.core:core-ktx:$rootProject.ktxCoreVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.ktxArchLifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.0.0-alpha1"
+
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.ktxArchLifecycleVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
 
     // Room
     implementation("androidx.room:room-ktx:$ktxRoomVersion")
     kapt("androidx.room:room-compiler:$ktxRoomVersion")
-
 }
